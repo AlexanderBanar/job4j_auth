@@ -1,0 +1,24 @@
+2022-01-16 10:14:41 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "PERSON" не найдена
+Table "PERSON" not found; SQL statement:
+select person0_.id as id1_0_, person0_.login as login2_0_, person0_.password as password3_0_ from person person0_ [42102-200]
+2022-01-16 10:14:41 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "PERSON" не найдена
+Table "PERSON" not found; SQL statement:
+select person0_.id as id1_0_0_, person0_.login as login2_0_0_, person0_.password as password3_0_0_ from person person0_ where person0_.id=? [42102-200]
+2022-01-16 10:16:25 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "PERSON" не найдена
+Table "PERSON" not found; SQL statement:
+select person0_.id as id1_0_, person0_.login as login2_0_, person0_.password as password3_0_ from person person0_ [42102-200]
+2022-01-16 10:16:25 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "PERSON" не найдена
+Table "PERSON" not found; SQL statement:
+select person0_.id as id1_0_0_, person0_.login as login2_0_0_, person0_.password as password3_0_0_ from person person0_ where person0_.id=? [42102-200]
+2022-01-16 10:17:21 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "PERSON" не найдена
+Table "PERSON" not found; SQL statement:
+select person0_.id as id1_0_, person0_.login as login2_0_, person0_.password as password3_0_ from person person0_ [42102-200]
+2022-01-16 10:17:21 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "PERSON" не найдена
+Table "PERSON" not found; SQL statement:
+select person0_.id as id1_0_0_, person0_.login as login2_0_0_, person0_.password as password3_0_0_ from person person0_ where person0_.id=? [42102-200]
