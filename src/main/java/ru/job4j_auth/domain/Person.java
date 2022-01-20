@@ -1,12 +1,10 @@
 package ru.job4j_auth.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
+@Table(name = "persons")
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,9 +12,8 @@ public class Person {
     private String login;
     private String password;
 
-    public static Person of(int id, String login, String password) {
+    public static Person of(String login, String password) {
         Person person = new Person();
-        person.setId(id);
         person.setLogin(login);
         person.setPassword(password);
         return person;
