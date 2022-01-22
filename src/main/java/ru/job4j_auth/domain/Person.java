@@ -1,5 +1,7 @@
 package ru.job4j_auth.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -11,6 +13,11 @@ public class Person {
     private int id;
     private String login;
     private String password;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "employee_id")
+    @JsonBackReference
+    private Employee employee;
 
     public static Person of(String login, String password) {
         Person person = new Person();
@@ -41,6 +48,14 @@ public class Person {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     @Override

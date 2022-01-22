@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import ru.job4j_auth.domain.Employee;
 
+import ru.job4j_auth.domain.Person;
 import ru.job4j_auth.repository.EmployeeRepository;
 
-
+import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/employee")
@@ -29,10 +29,17 @@ public class EmployeeController {
     }
 
     @GetMapping("/")
-    public List<Employee> findAll() {
-        return StreamSupport.stream(
-                this.repository.findAll().spliterator(), false
-        ).collect(Collectors.toList());
+    public Set<Employee> findAll() {
+        Set<Employee> rsl = new HashSet<>();
+        List<Person> persons = rest.exchange(
+                API,
+                HttpMethod.GET, null, new ParameterizedTypeReference<List<Person>>() { }
+        ).getBody();
+        for (Person person : persons) {
+            rsl.add(person.getEmployee());
+            System.out.println(person.getEmployee().getName());
+        }
+        return rsl;
     }
 
 }

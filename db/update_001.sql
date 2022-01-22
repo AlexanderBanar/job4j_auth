@@ -43,3 +43,13 @@ insert into employees_persons(employee_id, person_id) VALUES (1, 2);
 insert into employees_persons(employee_id, person_id) VALUES (1, 3);
 insert into employees_persons(employee_id, person_id) VALUES (2, 5);
 insert into employees_persons(employee_id, person_id) VALUES (2, 6);
+
+drop table employees_persons;
+
+alter table persons add column employee_id int references employees(id);
+
+update persons set employee_id = 1 where id = 1;
+update persons set employee_id = 1 where id = 2;
+update persons set employee_id = 1 where id = 3;
+update persons set employee_id = 2 where id = 5;
+update persons set employee_id = 2 where id = 6;

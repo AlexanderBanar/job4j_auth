@@ -1,5 +1,7 @@
 package ru.job4j_auth.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.*;
@@ -18,7 +20,8 @@ public class Employee {
     @Column(name = "hiring_date")
     private Timestamp hiringDate;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Set<Person> personSet;
 
     public static Employee of(String name, String surname, long itn) {
