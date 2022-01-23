@@ -23,7 +23,7 @@ public class PersonController {
     @GetMapping("/")
     public List<Person> findAll() {
         return StreamSupport.stream(
-                this.persons.findAll().spliterator(), false
+                this.persons.findAllPersons().spliterator(), false
         ).collect(Collectors.toList());
     }
 
