@@ -10,6 +10,7 @@ import ru.job4j_auth.domain.Employee;
 
 import ru.job4j_auth.domain.Person;
 import ru.job4j_auth.repository.EmployeeRepository;
+import ru.job4j_auth.repository.PersonRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,16 +24,18 @@ public class EmployeeController {
     private RestTemplate rest;
     private static final String API = "http://localhost:8080/person/";
     private static final String API_ID = "http://localhost:8080/person/{id}";
-    private final EmployeeRepository repository;
+    private final EmployeeRepository employeeRepository;
+    private final PersonRepository personRepository;
 
-    public EmployeeController(EmployeeRepository repository) {
-        this.repository = repository;
+    public EmployeeController(EmployeeRepository empRepo, PersonRepository perRepo) {
+        this.employeeRepository = empRepo;
+        this.personRepository = perRepo;
     }
 
     @GetMapping("/")
     public List<Employee> findAll() {
         return StreamSupport.stream(
-                this.repository.findAll().spliterator(), false
+                this.employeeRepository.findAll().spliterator(), false
         ).collect(Collectors.toList());
     }
 
@@ -40,12 +43,11 @@ public class EmployeeController {
     public ResponseEntity<Person> create(@PathVariable int id, @RequestParam String login,
                                          @RequestParam String password) {
         Person person = Person.of(login, password);
-        Optional employeeOpt = repository.findById(id);
+        Optional employeeOpt = employeeRepository.findById(id);
         if (employeeOpt.isPresent()) {
             Employee employee = (Employee) employeeOpt.get();
             Person rsl = rest.postForObject(API, person, Person.class);
-            employee.addPerson(person);
-            repository.save(employee);
+            personRepository.setEmp(rsl.getId(), employee);
             return new ResponseEntity<>(
                     rsl,
                     HttpStatus.CREATED
@@ -58,16 +60,22 @@ public class EmployeeController {
         }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable int id, @RequestBody List<Person> persons) {
-        Optional employeeOpt = repository.findById(id);
+    @PutMapping("/{pId}/{eId}")
+    public ResponseEntity<Void> update(@PathVariable int pId,
+                                       @PathVariable int eId,
+                                       @RequestParam String login,
+                                       @RequestParam String password) {
+        Person person = Person.of(login, password);
+        person.setId(pId);
+        rest.put(API, person);
+        Optional employeeOpt = employeeRepository.findById(eId);
         if (employeeOpt.isPresent()) {
             Employee employee = (Employee) employeeOpt.get();
-            for (Person person : persons) {
-                person.setEmployee(employee);
-                rest.put(API, person);
-            }
-            return ResponseEntity.ok().build();
+            personRepository.setEmp(pId, employee);
+            return new ResponseEntity<>(
+                    null,
+                    HttpStatus.OK
+            );
         } else {
             return new ResponseEntity<>(
                     null,
